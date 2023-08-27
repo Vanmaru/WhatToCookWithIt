@@ -32,9 +32,11 @@ namespace WhatToCookWithIt.Entities
         private async Task ExecuteCommand(Update update)
         {
             Message msg = update.Message;
+            string commandText = msg.Text.Split(' ').First(); //we need only command name, without arguments
+
             foreach (var command in commands)
             {
-                if (command.Name == msg.Text)
+                if (command.Name == commandText)
                 {
                     await command.Execute(update);
                 }
