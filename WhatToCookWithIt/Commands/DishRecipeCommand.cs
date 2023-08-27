@@ -9,7 +9,7 @@ namespace WhatToCookWithIt.Commands
     public class DishRecipeCommand : ICommand
     {
         public TelegramBotClient Client => Bot.GetTelegramBot();
-        public string Name => "/DishRecipe";
+        public string Name => "/dish";
         public async Task Execute(Update update)
         {
             long chatId = update.Message.Chat.Id;
@@ -34,7 +34,9 @@ namespace WhatToCookWithIt.Commands
                     {
                         var meal = result.Meals[0];
                         // Формируем сообщение с рецептом
-                        string recipeMessage = $"Рецепт для блюда '{meal.StrMeal}':\n\n{meal.StrInstructions}";
+                        string mealName = await Translater.ToRussianAsync(meal.StrMeal);
+                        string instrustions = await Translater.ToRussianAsync(meal.StrInstructions);
+                        string recipeMessage = $"Рецепт для блюда '{mealName}':\n\n{instrustions}";
 
                         await Client.SendTextMessageAsync(chatId, recipeMessage);
                     }

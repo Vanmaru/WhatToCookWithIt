@@ -40,8 +40,10 @@ namespace WhatToCookWithIt.Entities
                 if (command.Name == commandText)
                 {
                     await command.Execute(update);
+                    return;
                 }
             }
+            await commands[2].Execute(update);
         }
         public void StartListen(IListener newListener)
         {
