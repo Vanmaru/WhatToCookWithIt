@@ -27,21 +27,18 @@ namespace WhatToCookWithIt.Commands
                 {
                     HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
                     string jsonContent = await response.Content.ReadAsStringAsync();
+
                     var result = JsonConvert.DeserializeObject<ApiResult>(jsonContent);
+
                     if (result != null && result.Meals != null && result.Meals.Any())
                     {
-                        StringBuilder messageBuilder = new StringBuilder();
-                        messageBuilder.AppendLine($"Блюда с ингредиентом '{ingredient}':");
-
                         foreach (var meal in result.Meals)
                         {
                             string recipeLink = $"/DishRecipe {meal.IdMeal}";
                             string clickableMealName = $"<a href='{recipeLink}'>{meal.StrMeal}</a>";
 
-                            messageBuilder.AppendLine(clickableMealName);
+                            await Client.SendTextMessageAsync(chatId, clickableMealName, parseMode: ParseMode.Html);
                         }
-
-                        await Client.SendTextMessageAsync(chatId, messageBuilder.ToString(), parseMode: ParseMode.Html);
                     }
                     else
                     {
