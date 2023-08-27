@@ -36,11 +36,12 @@ namespace WhatToCookWithIt.Commands
                         foreach (var meal in result.Meals)
                         {
                             string recipeLink = $"/DishRecipe {meal.IdMeal}";
-                            string clickableMealName = $"[{meal.StrMeal}]({recipeLink})";
+                            string clickableMealName = $"<a href='{recipeLink}'>{meal.StrMeal}</a>";
 
                             messageBuilder.AppendLine(clickableMealName);
                         }
-                        await Client.SendTextMessageAsync(chatId, messageBuilder.ToString(), parseMode: ParseMode.Markdown);
+
+                        await Client.SendTextMessageAsync(chatId, messageBuilder.ToString(), parseMode: ParseMode.Html);
                     }
                     else
                     {
@@ -53,6 +54,7 @@ namespace WhatToCookWithIt.Commands
                 await Client.SendTextMessageAsync(chatId, "Пожалуйста, укажите ингредиент.");
             }
         }
+
         private class ApiResult
         {
             [JsonProperty("meals")]
