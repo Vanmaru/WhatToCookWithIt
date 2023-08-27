@@ -14,6 +14,7 @@ namespace WhatToCookWithIt.Entities
             commands = new List<ICommand>()
             {
                 new StartCommand(),
+                new DishListCommand(),
                 new RegisterCommand(this)
             };
         }

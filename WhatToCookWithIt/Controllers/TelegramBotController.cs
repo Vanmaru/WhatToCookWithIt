@@ -20,14 +20,6 @@ namespace WhatToCookWithIt.Controllers
                 return;
             await updateDistributor.GetUpdate(update);
         }
-
-        //[HttpPost]
-        //public async Task<IActionResult> Post([FromBody] Update update)
-        //{
-        //    await _messageHandler.HandleMessageAsync(update);
-
-        //    return Ok();
-        //}
         [HttpGet]
         public string Get()
         {
